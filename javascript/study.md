@@ -343,3 +343,91 @@ function multiply(a, b) {
         console.log(pattern.test(str)) // 测试str是否包含pattern
 ```
 
+### 14 变量提升
+
+- 遇到 script 标签的话 js 就进行预解析，将变量 var 和 function 声明提升，但不会执行 function，然后就进入上下文执行，上下文执行还是执行预解析同样操作，直到没有 var 和 function，就开始执行上下文， 注意function提升在前
+
+  ```javascript
+  var getName=function(){
+    console.log(2);
+  }
+  
+  function getName(){
+    console.log(1);
+  }
+  
+  getName();
+  //结果为2
+  ```
+
+### 15 this注意事项
+
+- 简单理解，this指向的是该this所在的最里层的object对象。
+
+  - 1. 函数不是object对象，所以没有写在object对象里的函数调用this会指向window
+
+  - 2. 构造函数是object对象，所以在构造函数中调用this会指向该构造函数
+
+  - 3. html元素是object元素，所以在html元素中调用this会指向该元素
+
+  - 4. 函数1 return 函数2，函数2 return this，该this会指向window
+
+- 场景
+  - 1. 在方法中，this 表示该方法所属的对象。
+  - 2. 如果单独使用，this 表示全局对象。
+  - 3. 在函数中，this 表示全局对象。
+  - 4. 在函数中，在严格模式下，this 是未定义的(undefined)。
+  - 5. 在事件中，this 表示接收事件的元素。
+  - 6. 类似 call() 和 apply() 方法可以将 this 引用到任何对象。
+
+```javascript
+    let obj1 = {
+        fun1:function(){
+            return function(){
+                return this;
+            }
+        },
+    };
+    let obj2 = {
+        fun1:function(){
+            return this
+        },
+    };
+    console.log(obj1.fun1()());     //window
+    console.log(obj2.fun1());       //fun1
+```
+
+
+
+### 16 ES6 class
+
+- 构造函数,`constructor`方法是类的默认方法，通过`new`命令生成对象实例时，自动调用该方法。一个类必须有`constructor`方法，如果没有显式定义，一个空的`constructor`方法会被默认添加。`constructor`方法默认返回实例对象（即`this`），完全可以指定返回另外一个对象, 类的构造函数，不使用`new`是没法调用的，会报错
+
+  ```javascript
+  class Point {
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+    }
+  
+    toString() {
+      return '(' + this.x + ', ' + this.y + ')';
+    }
+  }
+  ```
+
+  
+
+- 定义“类”的方法的时候，前面不需要加上`function`这个关键字
+
+- 构造函数的`prototype`属性，在ES6的“类”上面继续存在。事实上，类的所有方法都定义在类的`prototype`属性上面
+
+- `Object.assign`方法可以很方便地一次向类添加多个方法。
+
+  ```javascript
+  Object.assign(Point.prototype, {
+    toString(){},
+    toValue(){}
+  });
+  ```
+
