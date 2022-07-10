@@ -1,3 +1,22 @@
+
+- [1 多个js有同名函数按照最后引入的为准](#1-多个js有同名函数按照最后引入的为准)
+- [2 var let const区别](#2-var-let-const区别)
+- [3 数据类型](#3-数据类型)
+- [4 乘法规则](#4-乘法规则)
+- [5 typeof Array 和Object都是显示object](#5-typeof-array-和object都是显示object)
+- [6 for in 遍历数组和对象](#6-for-in-遍历数组和对象)
+- [7 对象](#7-对象)
+- [8 函数](#8-函数)
+- [9 事件](#9-事件)
+- [10 JavaScript == 与 === 区别](#10-javascript--与--区别)
+- [11 js中的foreach用法](#11-js中的foreach用法)
+- [12 类型转换](#12-类型转换)
+- [13 正则表达式](#13-正则表达式)
+- [14 变量提升](#14-变量提升)
+- [15 this注意事项](#15-this注意事项)
+- [16 ES6 class](#16-es6-class)
+- [16  console.log注意事项](#16--consolelog注意事项)
+- [17 异步编程](#17-异步编程)
 ### 1 多个js有同名函数按照最后引入的为准
 
 - 1 查找是否有外部引入的js文件
@@ -178,7 +197,46 @@ function multiply(a, b) {
             // 没有参数, = 号还是不能省略的
             let test = () => console.log(a)
         ```
+        
     - 关于this, 箭头函数没有自己的this，箭头函数的this不是调用的时候决定的，而是在定义的时候所在的对象就是它的this；箭头函数的this看外层是否有函数，如果有，外层函数的this就是内部调用箭头函数的this；如果没有，则this是window
+    
+    - 参数， arguments参数
+    
+        ```javascript
+        function test() {
+        	console.log(arguments)
+        }
+        ```
+    
+    - 默认参数 `function test(name = "blakeyi")`
+    
+    - 闭包，匿名函数经常被人误认为是闭包（closure）。闭包指的是那些引用了另一个函数作用域中变量的函数，通常是在嵌套函数中实现的
+    
+        ```javascript
+        function createComparisonFunction(propertyName) {
+            return function (object1, object2) {
+                let value1 = object1[propertyName];
+                let value2 = object2[propertyName];
+                if (value1 < value2) {
+                    return -1;
+                } else if (value1 > value2) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            };
+        }
+        let stu1 = {
+            age:20
+        }
+        let stu2 = {
+            age:21
+        }
+        let compare = createComparisonFunction("age")
+        console.log(`${compare(stu1, stu2) == -1 ? "stu1" : "stu2"}`)
+        ```
+    
+        
 
 ### 9 事件
 - 种类，[更多点击此处](https://www.runoob.com/jsref/dom-obj-event.html)
@@ -430,4 +488,78 @@ function multiply(a, b) {
     toValue(){}
   });
   ```
+
+  
+
+- 继承，通过修改prototype的指向实现继承关系
+
+  ```javascript
+  function SuperType() {
+      this.property = true;
+  }
+  SuperType.prototype.getSuperValue = function () {
+      return this.property;
+  };
+  function SubType() {
+      this.subproperty = false;
+  }
+  // 继承 SuperType
+  SubType.prototype = new SuperType();
+  
+  // 或者调用call来实现继承
+  function SubType() {
+  // 继承 SuperType 并传参
+  	SuperType.call(this, "Nicholas");
+  }
+  let temp = new SubType()
+  console.log(temp.getSuperValue())
+  ```
+
+  ### 16  console.log注意事项
+
+  - 打印引用类型如map，数组等等时，打印的是最终的值，可以使用 debugger或者将对象转为字符串进行打印(JSON.stringify)
+
+  ### 17 异步编程
+
+  - async和await， async用于修饰函数，如果函数有返回值的话会把返回值包装成一个promise对象
+
+    ```javascript
+    async function foo() {
+        console.log(1);
+        return 3;
+        //  return Promise.resolve(3)
+    }
+    // 给返回的期约添加一个解决处理程序
+    foo().then(console.log);
+    console.log(2);
+    // 输出结果为：
+    // 1
+    // 2
+    // 3
+    ```
+
+    下面例子可以看出async的执行顺序， 结果是 1.....9，顺序输出，  await 关键字暂停执行，向消息队列中添加一个期约在落定之后执行的任务，期约立即落定，把给 await 提供值的任务添加到消息队列，  JavaScript 运行时从消息队列中取出解决 await 期约的处理程序，并将解决的值 6 提供给它，然后执行await后面的语句
+
+    ```javascript
+    async function foo() {
+        console.log(2);
+        console.log(await Promise.resolve(6));
+        console.log(7);
+    }
+    
+    async function bar() {
+        console.log(4);
+        console.log(await 8);
+        console.log(9);
+    }
+    console.log(1);
+    foo();
+    console.log(3);
+    bar();
+    console.log(5);
+    ```
+
+    
+
+  
 
