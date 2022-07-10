@@ -3,7 +3,9 @@
 - [2 var let const区别](#2-var-let-const区别)
 - [3 数据类型](#3-数据类型)
 - [4 乘法规则](#4-乘法规则)
-- [5 typeof Array 和Object都是显示object](#5-typeof-array-和object都是显示object)
+- [5 数据类型相关](#5-数据类型相关)
+  - [5.1 undefined和null区别](#51-undefined和null区别)
+  - [5.2 变量类型和数据类型](#52-变量类型和数据类型)
 - [6 for in 遍历数组和对象](#6-for-in-遍历数组和对象)
 - [7 对象](#7-对象)
 - [8 函数](#8-函数)
@@ -17,7 +19,7 @@
 - [16 ES6 class](#16-es6-class)
 - [16  console.log注意事项](#16--consolelog注意事项)
 - [17 异步编程](#17-异步编程)
-### 1 多个js有同名函数按照最后引入的为准
+# 1 多个js有同名函数按照最后引入的为准
 
 - 1 查找是否有外部引入的js文件
 
@@ -25,12 +27,12 @@
 
 - 3 在本html内部按照顺序查找是否有F函数，如果没有，出错处理；如果有同样按照后面覆盖前面的原则进行函数调用。
 
-###  2 var let const区别
+#  2 var let const区别
 
 - 1 作用域不一样，var相当于全局，后声明会把前面的覆盖， let则会报错，let 变量如果在块内声明，则只在块内生效
 - 2 const不能修改
 
-###  3 数据类型
+#  3 数据类型
 
 - var length = 16;                      						                 // Number 通过数字字面量赋值
 - var points = x * 10;                                                         // Number 通过表达式字面量赋值
@@ -38,7 +40,7 @@
 - var cars = ["Saab", "Volvo", "BMW"];                           // Array 通过数组字面量赋值
 - var person = {firstName:"John", lastName:"Doe"};  // Object 通过对象字面量赋值 
 
-### 4 乘法规则
+# 4 乘法规则
 
 ```javascript
 // 如果a或者b中包含非数字，输出为NaN, 否则就算是字符串也会解析成数字进行计算
@@ -49,7 +51,14 @@ function multiply(a, b) {
 
 
 
-### 5 typeof Array 和Object都是显示object
+# 5 数据类型相关
+
+## 5.1 undefined和null区别
+undefined是声明了,但是没有赋值
+null是声明了且赋值了,只不过值是null,主要是用来对对象初始化时赋值,表明该变量是一个对象,但是还没有赋值,对象不用之后可以重新赋值为null,以便垃圾回收
+
+## 5.2 变量类型和数据类型
+js是弱数据类型,变量保存的数据的地址,所以变量的类型其实就是数据的类型
 
 ```javascript
   var arr = [1, 2, 3]
@@ -62,7 +71,7 @@ function multiply(a, b) {
   console.log(Array.isArray(arr)) // true
 ```
 
-###  6 for in 遍历数组和对象
+#  6 for in 遍历数组和对象
 
 ```javascript
     var arr = [3, 2, 1]
@@ -78,7 +87,7 @@ function multiply(a, b) {
     }
 ```
 
-### 7 对象
+# 7 对象
 
 - 对象访问
 
@@ -170,7 +179,19 @@ function multiply(a, b) {
 		let es6str = `商品:${obj.goodName},价格:${obj.price}`;
     
     ```
-### 8 函数
+# 8 函数
+
+- 任何函数本质都是通过对象调用的,全局的函数是window来调用
+- 所有函数的__proto__都是一样的
+- 函数实例对象的隐式原型(__proto__)等于其构造函数的的显式原型(prototype)
+- 函数的显示原型指向的是对象默认是空的Object(但是object不满足)
+```javascript
+console.log(Function.prototype instanceOf Obejct) // true
+console.log(Object.prototype instanceOf Obejct) // false
+```
+
+
+
 - 箭头函数, 
     - 常见定义方式, 主要是省了function
         ```javascript
@@ -238,7 +259,7 @@ function multiply(a, b) {
     
         
 
-### 9 事件
+# 9 事件
 - 种类，[更多点击此处](https://www.runoob.com/jsref/dom-obj-event.html)
     - onchange	HTML 元素改变
     - onclick	    用户点击 HTML 元素
@@ -262,7 +283,7 @@ function multiply(a, b) {
         <button id="btn" onclick="handleClick()">点我</button>
     ```
 
-### 10 JavaScript == 与 === 区别
+# 10 JavaScript == 与 === 区别
 - 尽量使用 === 和 !==
 - 高级类型不适用 === 和 == 来判断，自己写比较函数
     ```javascript
@@ -310,7 +331,7 @@ function multiply(a, b) {
             return true
         }
     ```
-### 11 js中的foreach用法
+# 11 js中的foreach用法
 - 主要对数组遍历使用
     ```javascript
         // 数组遍历
@@ -338,7 +359,7 @@ function multiply(a, b) {
         })
     ```
 
-### 12 类型转换
+# 12 类型转换
 ```javascript
     // 数字和字符串互转
     let num = 110
@@ -391,7 +412,7 @@ function multiply(a, b) {
     }
 ```
 
-### 13 正则表达式
+# 13 正则表达式
 ```javascript
         // 正则表达式 基础
         let pattern = /runoob/i  // 用两个斜杆进行包裹, /runoob/(i, g, m) i:忽略大小写, g：全局匹配, m: 多行匹配
@@ -401,7 +422,7 @@ function multiply(a, b) {
         console.log(pattern.test(str)) // 测试str是否包含pattern
 ```
 
-### 14 变量提升
+# 14 变量提升
 
 - 遇到 script 标签的话 js 就进行预解析，将变量 var 和 function 声明提升，但不会执行 function，然后就进入上下文执行，上下文执行还是执行预解析同样操作，直到没有 var 和 function，就开始执行上下文， 注意function提升在前
 
@@ -418,7 +439,7 @@ function multiply(a, b) {
   //结果为2
   ```
 
-### 15 this注意事项
+# 15 this注意事项
 
 - 简单理解，this指向的是该this所在的最里层的object对象。
 
@@ -457,7 +478,7 @@ function multiply(a, b) {
 
 
 
-### 16 ES6 class
+# 16 ES6 class
 
 - 构造函数,`constructor`方法是类的默认方法，通过`new`命令生成对象实例时，自动调用该方法。一个类必须有`constructor`方法，如果没有显式定义，一个空的`constructor`方法会被默认添加。`constructor`方法默认返回实例对象（即`this`），完全可以指定返回另外一个对象, 类的构造函数，不使用`new`是没法调用的，会报错
 
@@ -515,11 +536,11 @@ function multiply(a, b) {
   console.log(temp.getSuperValue())
   ```
 
-  ### 16  console.log注意事项
+  # 16  console.log注意事项
 
   - 打印引用类型如map，数组等等时，打印的是最终的值，可以使用 debugger或者将对象转为字符串进行打印(JSON.stringify)
 
-  ### 17 异步编程
+  # 17 异步编程
 
   - async和await， async用于修饰函数，如果函数有返回值的话会把返回值包装成一个promise对象
 
