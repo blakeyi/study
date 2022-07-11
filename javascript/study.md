@@ -8,7 +8,8 @@
   - [5.2 变量类型和数据类型](#52-变量类型和数据类型)
 - [6 for in 遍历数组和对象](#6-for-in-遍历数组和对象)
 - [7 对象](#7-对象)
-- [8 函数](#8-函数)
+- [8 函数和原型链](#8-函数和原型链)
+  - [8.1函数](#81函数)
 - [9 事件](#9-事件)
 - [10 JavaScript == 与 === 区别](#10-javascript--与--区别)
 - [11 js中的foreach用法](#11-js中的foreach用法)
@@ -179,8 +180,9 @@ js是弱数据类型,变量保存的数据的地址,所以变量的类型其实�
 		let es6str = `商品:${obj.goodName},价格:${obj.price}`;
     
     ```
-# 8 函数
+# 8 函数和原型链
 
+## 8.1函数
 - 任何函数本质都是通过对象调用的,全局的函数是window来调用
 - 所有函数的__proto__都是一样的
 - 函数实例对象的隐式原型(__proto__)等于其构造函数的的显式原型(prototype)
@@ -189,8 +191,6 @@ js是弱数据类型,变量保存的数据的地址,所以变量的类型其实�
 console.log(Function.prototype instanceOf Obejct) // true
 console.log(Object.prototype instanceOf Obejct) // false
 ```
-
-
 
 - 箭头函数, 
     - 常见定义方式, 主要是省了function
@@ -257,6 +257,11 @@ console.log(Object.prototype instanceOf Obejct) // false
         console.log(`${compare(stu1, stu2) == -1 ? "stu1" : "stu2"}`)
         ```
     
+    ## 8.2 原型链
+
+    - 1.所有引用类型（函数，数组，对象有隐式原型(__proto__), 指向其构造函数的prototype, JS没有记录类型的元数据，因此JS只能通过对象的隐式原型找到创建他的函数原型，从而确定其类型。
+    - 2.函数有显示原型(prototype),所有函数的隐式原型都指向Function的原型,所有的函数原型的隐式原型，都指向Object原型
+    - (https://blog.csdn.net/qq_36996271/article/details/82527256?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-82527256-blog-105535699.pc_relevant_multi_platform_whitelistv1&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-82527256-blog-105535699.pc_relevant_multi_platform_whitelistv1&utm_relevant_index=1)[链接]
         
 
 # 9 事件
